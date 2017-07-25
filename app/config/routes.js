@@ -20,8 +20,10 @@ var IndexRoute = router.IndexRoute;
 
 // Reference the high-level components
 var Main = require("../components/Main");
-var Saved = require("../components/Saved");
-var Search = require("../components/Search");
+var Child1 = require("../components/Child1");
+var Child2 = require("../components/Child2");
+var Grandchild1 = require("../components/Grandchild1");
+var Grandchild2 = require("../components/Grandchild2");
 
 
 // Export the Routes
@@ -32,15 +34,18 @@ module.exports = (
     <Route path="/" component={Main}>
 
       {/* If user selects Info or Chat show the appropriate component */}
-      <Route path="Search" component={Search}>
-       
-        <IndexRoute component={Search} />
+      <Route path="Child1" component={Child1}>
+        <Route path="Grandchild1" component={Grandchild1} />
+        <Route path="Grandchild2" component={Grandchild2} />
+
+        <IndexRoute component={Grandchild1} />
       </Route>
       
-      <Route path="Saved" component={Saved} >
-       
-        <IndexRoute component={Saved} />
-      </Route>
+      <Route path="Child2" component={Child2} />
+      
+
+      {/* If user selects any other path... we get the Info Route */}
+      <IndexRoute component={Child1} />
 
     </Route>
   </Router>

@@ -1,109 +1,47 @@
 // Include React
 var React = require("react");
-
-// Here we include all of the sub-components
-var Search = require("./Search");
-var Saved = require("./Saved");
-
-// Requiring our helper for making API calls
-var helpers = require("../config/helpers");
+// Including the Link component from React Router to navigate within our application without full page reloads
 var Link = require("react-router").Link;
 
-// Create the Parent Component
+
+var helpers = require('../config/helpers');
+
+
+// Create the Main component
 var Main = React.createClass({
 
-  // Here we set a generic state associated with the number of clicks
-  getInitialState: function() {
+  getIninitalState: function () {
     return {
-      clicks: 0,
-      clickID: "Main"
+      articles: 0
     };
   },
 
-  //  On load display the number of clicks
-  componentDidMount: function() {
-    console.log("COMPONENT MOUNTED");
-
-    // The moment the page renders on page load, we will retrieve the previous click count.
-    // We will then utilize that click count to change the value of the click state.
-    helpers.getArticles()
-      .then(function(response) {
-        // Using a ternary operator we can set newClicks to the number of clicks in our response object
-        // If we don't have any clicks in our database, set newClicks to 0
-        var newClicks = response.data.length ? response.data[0].clicks : 0;
-        this.setState({
-          clicks: newClicks
-        });
-        console.log("RESULTS", response);
-        console.log("Saved clicks", newClicks);
-      }.bind(this));
-  },
-  // Whenever our component updates, the code inside componentDidUpdate is run
-  componentDidUpdate: function(prevState) {
-    console.log("COMPONENT UPDATED");
-
-    // We will check if the click count has changed...
-    if (prevState.clicks !== this.state.clicks) {
-
-      // If it does, then update the clickcount in MongoDB
-      helpers.saveClicks({ clickID: this.state.clickID, clicks: this.state.clicks })
-        .then(function() {
-          console.log("Posted to MongoDB");
-        });
-    }
-  },
-  // Whenever the button is clicked we'll use setState to add to the clickCounter
-  // Note the syntax for setting the state
-  handleClick: function() {
-    this.setState({ clicks: this.state.clicks + 1 });
-  },
-
-  // Whenever the button is clicked we'll use setState to reset the clickCounter
-  // This will reset the clicks -- and it will be passed ALL children
-  resetClick: function() {
-    this.setState({ clicks: 0 });
-  },
-
-  // Here we render the function
+  // Here we render the component
   render: function() {
+
     return (
-      <div>
+      
       <div className="container">
 
         <div className="row">
 
-          <div className="jumbotron">
+          <div className="jumbotron text-center">
             <h2><strong>New York Times Search</strong></h2>
               <p><em>Search and annotate your favorite articles.</em></p>
                 
-              
+             
           </div>
         </div>
-          <div className="row">
-            <Search/>
-          </div>
-      
+    
 
           
 
-          
-            <div className="row">
-              <div className="panel panel-default">
-                <div className="panel-heading">
-                  <h3 className="panel-title text-center">Search</h3>
-
-                </div>
-                <div className="panel-body text-center">
-                  <Saved/>
-                </div>
-              </div>
-
-            </div>
+       
 
             {/* Added this.props.children to dump all of the child components into place */}
             {this.props.children}
 
-          </div>
+          
         </div>
     );
   }
