@@ -16,6 +16,10 @@ var Main = React.createClass({
     };
   },
 
+  articleTest: function() {
+    helpers.getArticles();
+  },
+
   // Here we render the component
   render: function() {
 
