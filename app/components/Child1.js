@@ -8,7 +8,18 @@ var helpers = require('../config/helpers');
 var Child1 = React.createClass({
 
   getInitialState: function () {
-    return { term: ""};
+    return { term: "" };
+  },
+
+  handleChange: function () {
+    this.setState({ term: event.target.value})
+  },
+
+  handleSubmit: function (event) {
+    event.preventDefault();
+
+    this.props.setTerm(this.state.term);
+    this.setState({ term: "" })
   },
 
   articleTest: function() {
@@ -26,13 +37,28 @@ var Child1 = React.createClass({
             <h3 className="panel-title text-center">Search</h3>
           </div>
           <div className="panel-body">
+            <form onSubmit={this.handleSubmit}>
+              <div className="form-group">
+
+              <input
+                value={this.state.term}
+                type="text"
+                className="form-control text-center"
+                id="term"
+                onChange={this.handleChange}
+                required
+              />
+              <br />
+
+
             
 
             <p className="text-center">
-              <Link to="/Child1/Grandchild1"><button className="btn btn-warning btn-sm" type="button" onClick={this.articleTest}>Search</button></Link>
+              <Link to="/Child1/Grandchild1"><button className="btn btn-warning btn-sm" type="submit">Search</button></Link>
               
-            </p>    
-            
+            </p>
+            </div>
+            </form>            
 
             
   
@@ -47,7 +73,7 @@ var Child1 = React.createClass({
       <div className="col-lg-12">
       <div className="panel panel-primary">
               <div className="panel-heading">
-                <h3 className="panel-title text-center">Results</h3>
+                <h3 className="panel-title text-center">Saved</h3>
               </div>
               <div className="panel-body">
                   

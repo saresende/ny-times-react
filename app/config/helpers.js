@@ -4,10 +4,10 @@ var axios = require("axios");
 // Exporting an object with methods for retrieving and posting data to our API
 module.exports = {
   // Returns a promise object we can .then() off inside our Parent component
-  getArticles: function() {
+  getArticles: function(term) {
   	var authKey = "b9f91d369ff59547cd47b931d8cbc56b:0:74623931";
   	var queryURLBase = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=" +
-  authKey + "&q=aids";
+  authKey + "&q=" + term;
 
     return axios({
     	method: 'get',

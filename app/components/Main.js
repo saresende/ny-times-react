@@ -12,12 +12,27 @@ var Main = React.createClass({
 
   getIninitalState: function () {
     return {
-      articles: 0
+      term: "", results: ""
     };
   },
 
-  articleTest: function() {
-    helpers.getArticles();
+  componentDidUpdate: function (prevProps, prevState) {
+    if (prevState.term !== this.state.term) {
+      console.log('Updated!')
+
+      helpers.getArticles(this.state.term).then(function(data) {
+        if (data !== this.state.results) {
+          console.log('HERE')
+          console.log(data);
+
+          this.setState({ results: data })
+        }
+      }.bind(this));
+    }
+  },
+
+  setTerm: function(term) {
+    this.setState({ term: term });
   },
 
   // Here we render the component
